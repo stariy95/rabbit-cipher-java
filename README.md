@@ -4,8 +4,7 @@ Rabbit stream cipher implementation http://tools.ietf.org/rfc/rfc4503.txt
 > encryption are very fast, making the algorithm particularly suited
 > for all applications where large amounts of data or large numbers of
 > data packages have to be encrypted.  
-
-Currently IV usage not implemented.   
+ 
 Usage:
 ```java
     byte[] msg = "Hello World!".getBytes();
@@ -13,3 +12,5 @@ Usage:
     cypher.setupKey(key);
     cypher.crypt(msg);
 ```
+
+Currently IV usage not implemented.
