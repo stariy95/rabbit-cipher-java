@@ -3,7 +3,7 @@ package com.kendamasoft.crypto;
 import java.util.Arrays;
 
 /**
- * Rabbit stream cypher implementation.
+ * Rabbit stream cipher implementation.
  * @link http://tools.ietf.org/rfc/rfc4503.txt
  * Currently IV usage not implemented.
  *
@@ -11,14 +11,14 @@ import java.util.Arrays;
  *
  *  byte[] msg = "Hello World!".getBytes();
  *
- *  RabbitCypher cypher = new RabbitCypher();
- *  cypher.setupKey(key);
- *  cypher.crypt(msg);
+ *  RabbitCipher cipher = new RabbitCipher();
+ *  cipher.setupKey(key);
+ *  cipher.crypt(msg);
  *
  *
  * Created by Nikita Timofeev on 20.04.15.
  */
-public final class RabbitCypher {
+public final class RabbitCipher {
 
     private final static int[] A = {
             0x4D34D34D, 0xD34D34D3,

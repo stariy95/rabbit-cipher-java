@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RabbitCypherTest {
+public class RabbitCipherTest {
 
-    RabbitCypher cypher;
+    RabbitCipher cipher;
 
     /**
      * Conformance testing
@@ -27,15 +27,15 @@ public class RabbitCypherTest {
         byte[] S1 = os2ip((byte)0x88, (byte)0xE8, (byte)0xD8, (byte)0x15, (byte)0xC5, (byte)0x9C, (byte)0x0C, (byte)0x39, (byte)0x7B, (byte)0x69, (byte)0x6C, (byte)0x47, (byte)0x89, (byte)0xC6, (byte)0x8A, (byte)0xA7);
         byte[] S2 = os2ip((byte)0xF4, (byte)0x16, (byte)0xA1, (byte)0xC3, (byte)0x70, (byte)0x0C, (byte)0xD4, (byte)0x51, (byte)0xDA, (byte)0x68, (byte)0xD1, (byte)0x88, (byte)0x16, (byte)0x73, (byte)0xD6, (byte)0x96);
 
-        cypher.setupKey(key);
+        cipher.setupKey(key);
 
-        byte[] s = cypher.nextBlock();
+        byte[] s = cipher.nextBlock();
         Assert.assertArrayEquals(S0, s);
 
-        s = cypher.nextBlock();
+        s = cipher.nextBlock();
         Assert.assertArrayEquals(S1, s);
 
-        s = cypher.nextBlock();
+        s = cipher.nextBlock();
         Assert.assertArrayEquals(S2, s);
     }
 
@@ -52,15 +52,15 @@ public class RabbitCypherTest {
         byte[] S1 = os2ip((byte)0xF5, (byte)0x76, (byte)0xCD, (byte)0x61, (byte)0xF4, (byte)0x40, (byte)0x5B, (byte)0x88, (byte)0x96, (byte)0xBF, (byte)0x53, (byte)0xAA, (byte)0x85, (byte)0x54, (byte)0xFC, (byte)0x19);
         byte[] S2 = os2ip((byte)0xE5, (byte)0x54, (byte)0x74, (byte)0x73, (byte)0xFB, (byte)0xDB, (byte)0x43, (byte)0x50, (byte)0x8A, (byte)0xE5, (byte)0x3B, (byte)0x20, (byte)0x20, (byte)0x4D, (byte)0x4C, (byte)0x5E);
 
-        cypher.setupKey(key);
+        cipher.setupKey(key);
 
-        byte[] s = cypher.nextBlock();
+        byte[] s = cipher.nextBlock();
         Assert.assertArrayEquals(S0, s);
 
-        s = cypher.nextBlock();
+        s = cipher.nextBlock();
         Assert.assertArrayEquals(S1, s);
 
-        s = cypher.nextBlock();
+        s = cipher.nextBlock();
         Assert.assertArrayEquals(S2, s);
     }
 
@@ -69,39 +69,39 @@ public class RabbitCypherTest {
         byte[] key = os2ip((byte)0x91, (byte)0x28, (byte)0x13, (byte)0x29, (byte)0x2E, (byte)0x3D, (byte)0x36, (byte)0xFE, (byte)0x3B, (byte)0xFC, (byte)0x62, (byte)0xF1, (byte)0xDC, (byte)0x51, (byte)0xC3, (byte)0xAC);
         byte[] key2 = os2ip((byte)0x92, (byte)0x28, (byte)0x13, (byte)0x29, (byte)0x2E, (byte)0x3D, (byte)0x36, (byte)0xFE, (byte)0x3B, (byte)0xFC, (byte)0x62, (byte)0xF1, (byte)0xDC, (byte)0x51, (byte)0xC3, (byte)0xAC);
         byte[] msg = {1, 3, 5, 7, 9, 11, 13, 17, 27, 31, 51};
-        byte[] msg2 = {1, 3, 5, 7, 9, 11, 13, 17, 27, 31, 51};
+        //byte[] msg2 = {1, 3, 5, 7, 9, 11, 13, 17, 27, 31, 51};
         byte[] msgOriginal = msg.clone();
 
-        cypher.setupKey(key);
+        cipher.setupKey(key);
         byte[] encrypted = msg.clone();
-        cypher.crypt(encrypted);
+        cipher.crypt(encrypted);
         byte[] encrypted_next = msg.clone();
-        cypher.crypt(encrypted_next);
+        cipher.crypt(encrypted_next);
 
         Assert.assertEquals(msgOriginal.length, encrypted.length);
         Assert.assertThat(msgOriginal, IsNot.not(IsEqual.equalTo(encrypted)));
         Assert.assertThat(encrypted, IsNot.not(IsEqual.equalTo(encrypted_next)));
 
-        cypher = new RabbitCypher();
-        cypher.setupKey(key);
-        cypher.crypt(encrypted);
+        cipher = new RabbitCipher();
+        cipher.setupKey(key);
+        cipher.crypt(encrypted);
         Assert.assertArrayEquals(msgOriginal, encrypted);
 
-        cypher = new RabbitCypher();
-        cypher.setupKey(key2);
+        cipher = new RabbitCipher();
+        cipher.setupKey(key2);
         byte[] encrypted2 = msg.clone();
-        cypher.crypt(encrypted2);
+        cipher.crypt(encrypted2);
         Assert.assertThat(encrypted, IsNot.not(IsEqual.equalTo(encrypted2)));
     }
 
     @Before
     public void setUp() throws Exception {
-        cypher = new RabbitCypher();
+        cipher = new RabbitCipher();
     }
 
     @Test(expected=IllegalStateException.class)
     public void testCryptWoKey() throws Exception {
-        cypher.crypt(new byte[]{0});
+        cipher.crypt(new byte[]{0});
     }
 
     @Test
@@ -131,11 +131,11 @@ public class RabbitCypherTest {
         byte[] key = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         byte[] msg = {1, 3, 5, 7, 9, 11, 13, 17, 27, 31, 51};
 
-        cypher.setupKey(key);
-        cypher.crypt(msg);
+        cipher.setupKey(key);
+        cipher.crypt(msg);
 
-        cypher.reset();
-        cypher.crypt(msg);
+        cipher.reset();
+        cipher.crypt(msg);
     }
 
     @Test
@@ -143,15 +143,15 @@ public class RabbitCypherTest {
         byte[] key = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         byte[] msg = {1, 2, 3};
 
-        cypher.setupKey(key);
+        cipher.setupKey(key);
         byte[] encrypted = msg.clone();
-        cypher.crypt(encrypted);
+        cipher.crypt(encrypted);
 
-        cypher.reset();
+        cipher.reset();
 
-        cypher.setupKey(key);
+        cipher.setupKey(key);
         byte[] encrypted2 = msg.clone();
-        cypher.crypt(encrypted2);
+        cipher.crypt(encrypted2);
 
         Assert.assertArrayEquals(encrypted, encrypted2);
     }
