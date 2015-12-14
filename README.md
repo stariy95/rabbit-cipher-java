@@ -8,9 +8,9 @@ Rabbit stream cipher implementation http://tools.ietf.org/rfc/rfc4503.txt
 Usage:
 ```java
     byte[] msg = "Hello World!".getBytes();
-    RabbitCypher cypher = new RabbitCypher();
-    cypher.setupKey(key);
-    cypher.crypt(msg);
+    RabbitCipher cipher = new RabbitCipher();
+    cipher.setupKey(key);
+    cipher.crypt(msg);
 ```
 
 Currently IV usage not implemented.
